@@ -7,12 +7,19 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using co_sport.Models;
+using co_sport.ViewModels;
 
 namespace co_sport.Controllers
 {
     public class UserController : Controller
     {
         private SportContext db = new SportContext();
+
+        public ActionResult Login()
+        {
+
+            return View();
+        }
 
         // GET: User
         public ActionResult Index()
@@ -35,9 +42,9 @@ namespace co_sport.Controllers
             return View(user);
         }
 
-        // GET: User/Create
-        public ActionResult Create()
+        public ActionResult Register()
         {
+            ViewBag.Pass = true;
             return View();
         }
 
@@ -46,16 +53,27 @@ namespace co_sport.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserID,Gender,StuNum,Name,Contact")] User user)
+        public ActionResult Register(RegisterViewModel viewModel)
         {
+            if(viewModel.Password!=viewModel.PasswordConfirmed)
+            {
+                viewModel.Password = "";
+                viewModel.PasswordConfirmed = "";
+                ViewBag.Pass = false;
+                return View(viewModel);
+            }
             if (ModelState.IsValid)
             {
+                User user = new User { Name = viewModel.Name, Password = viewModel.Password, StuNum = int.Parse(viewModel.StuNum) };
+                user.Contact = viewModel.Contact ?? "";
+                user.WeChatID = viewModel.WeChatID ?? "";
+                user.SportTimeTable = new SportTimeTable();
+                user.Groups = new List<Group>();
                 db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            return View(user);
+            return View(viewModel);
         }
 
         // GET: User/Edit/5

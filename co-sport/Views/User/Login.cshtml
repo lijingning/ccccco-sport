@@ -1,0 +1,22 @@
+﻿@model co_sport.ViewModels.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.StuNum, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.StuNum, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-md-offset-2 col-md-4">
+        <input type="submit" value="登陆" class="btn btn-default" />
+    </div>
+    <p>@Html.ActionLink("没有账号？注册一个", "Register")</p>
+    <p>@Html.ActionLink("忘记密码？", "FindPassword")</p>
+</div>

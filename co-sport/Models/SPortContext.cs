@@ -9,7 +9,7 @@ namespace co_sport.Models
 {
     public class SportContext:DbContext
     {
-        public SportContext() : base("AppContext")
+        public SportContext() : base("SportContext")
         {
         }
 
