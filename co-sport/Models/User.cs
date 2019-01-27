@@ -14,7 +14,7 @@ namespace co_sport.Models
 
         [Required]
         [Display(Name ="学号")]
-        public int StuNum { get; set; }
+        public string StuNum { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

@@ -10,7 +10,7 @@ namespace co_sport.ViewModels
     {
         [Required]
         [MinLength(9),MaxLength(9)]
-        [Display(Name="学号*")]
+        [Display(Name="学号/用户名*")]
         public string StuNum { get; set; }
 
         [Required]

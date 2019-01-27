@@ -1,4 +1,4 @@
-﻿@model IEnumerable<co_sport.Models.User>
+﻿@model co_sport.Models.User
 
 @{
     ViewBag.Title = "Index";
@@ -6,9 +6,7 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 <table class="table">
     <tr>
         <th>
@@ -23,23 +21,16 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.StuNum)
+            @Html.DisplayFor(model => model.StuNum)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(model => model.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Contact)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.UserID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.UserID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.UserID })
+            @Html.DisplayFor(model => model.Contact)
         </td>
     </tr>
-}
 
 </table>

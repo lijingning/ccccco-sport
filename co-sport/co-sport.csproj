@@ -154,6 +154,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Attributes\CheckLoginAttribute.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -166,6 +167,10 @@
     <Compile Include="Migrations\201901261846489_modifyusers.cs" />
     <Compile Include="Migrations\201901261846489_modifyusers.Designer.cs">
       <DependentUpon>201901261846489_modifyusers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901270918308_stuNumToString.cs" />
+    <Compile Include="Migrations\201901270918308_stuNumToString.Designer.cs">
+      <DependentUpon>201901270918308_stuNumToString.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SportContext.cs" />
@@ -224,7 +229,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Attributes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -245,6 +249,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901261846489_modifyusers.resx">
       <DependentUpon>201901261846489_modifyusers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901270918308_stuNumToString.resx">
+      <DependentUpon>201901270918308_stuNumToString.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

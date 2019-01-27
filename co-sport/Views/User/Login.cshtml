@@ -5,18 +5,43 @@
 
 <h2>Login</h2>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.StuNum, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => model.StuNum, new { htmlAttributes = new { @class = "form-control" } })
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>User</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StuNum, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.StuNum, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.StuNum, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @if (ViewBag.Pass = false)
+        {
+            <font color="red">账号不存在或密码不正确！</font>
+        }
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="登陆" class="btn btn-default" />
+            </div>
+        </div>
     </div>
-    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-    </div>
-    <div class="col-md-offset-2 col-md-4">
-        <input type="submit" value="登陆" class="btn btn-default" />
-    </div>
-    <p>@Html.ActionLink("没有账号？注册一个", "Register")</p>
-    <p>@Html.ActionLink("忘记密码？", "FindPassword")</p>
-</div>
+    @Html.ActionLink("没有账号？点此注册", "Register");
+    @Html.ActionLink("忘记密码？", "ForgotPassword");
+}
+
