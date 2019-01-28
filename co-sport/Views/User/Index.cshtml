@@ -4,33 +4,44 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>个人信息及信息管理</h2>
 
-
-<table class="table">
-    <tr>
-        <th>
+<div>
+    <h4>基本信息</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
             @Html.DisplayNameFor(model => model.StuNum)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Contact)
-        </th>
-        <th></th>
-    </tr>
+        </dt>
 
-    <tr>
-        <td>
+        <dd>
             @Html.DisplayFor(model => model.StuNum)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.Contact)
-        </td>
-    </tr>
+        </dd>
 
-</table>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contact)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contact)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WeChatID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WeChatID)
+        </dd>
+    </dl>
+    <p>@Html.ActionLink("点此修改个人信息", "Edit")<br /></p>
+    <p>@Html.ActionLink("修改密码","ChangePassword")</p>
+</div>

@@ -11,7 +11,7 @@ namespace co_sport.Models
     public class User
     {
         public int UserID { get; set; }
-
+        
         [Required]
         [Display(Name ="学号")]
         public string StuNum { get; set; }

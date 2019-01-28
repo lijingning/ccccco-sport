@@ -17,7 +17,7 @@ namespace co_sport.Controllers
     public class UserController : Controller
     {
         private SportContext db = new SportContext();
-        private User GetUser()
+        private User GetUser()//已登录获取用户信息
         {
             string user_stuNum =Session["User"].ToString();
             User user = db.Users.Where(o => o.StuNum == user_stuNum).SingleOrDefault();
@@ -45,20 +45,21 @@ namespace co_sport.Controllers
             Session["User"] = viewModel.StuNum;
             return RedirectToAction("Index");
         }
-        public ActionResult Logout()
+
+        public ActionResult Logout()//登出
         {
             FormsAuthentication.SignOut();
             System.Web.HttpContext.Current.Session["User"] = null;
+            TempData["Alert"] = "注销成功！";
             return RedirectToAction("Login");
         }
-        // GET: User
+
         public ActionResult Index() //查看个人信息
         {
             User user = GetUser();
             return View(user);
         }
 
-        // GET: User/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -80,9 +81,6 @@ namespace co_sport.Controllers
             return View();
         }
 
-        // POST: User/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
@@ -97,6 +95,11 @@ namespace co_sport.Controllers
             }
             if (ModelState.IsValid)
             {
+                if(db.Users.Count(o=>o.StuNum==viewModel.StuNum)>0)
+                {
+                    ViewBag.Existence = true;
+                    return View();
+                }
                 User user = new User { Name = viewModel.Name, Password = viewModel.Password, StuNum = viewModel.StuNum };
                 user.Contact = viewModel.Contact ?? "";
                 user.WeChatID = viewModel.WeChatID ?? "";
@@ -109,14 +112,9 @@ namespace co_sport.Controllers
             return View(viewModel);
         }
 
-        // GET: User/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Users.Find(id);
+            User user = GetUser();
             if (user == null)
             {
                 return HttpNotFound();
@@ -124,46 +122,54 @@ namespace co_sport.Controllers
             return View(user);
         }
 
-        // POST: User/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserID,Gender,StuNum,Name,Contact")] User user)
+        public ActionResult Edit([Bind(Include = "UserID,StuNum,Name,Contact,WeChatID")] User _user)
         {
-            if (ModelState.IsValid)
+            User user = GetUser();
+            user.Contact=_user.Contact;
+            user.WeChatID = _user.WeChatID;
+            try
             {
-                db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
             }
-            return View(user);
-        }
-
-        // GET: User/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
+            catch(Exception)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                TempData["Alert"] = "数据储存出现错误，请联系系统管理员！";
             }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
-        }
-
-        // POST: User/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
-            db.SaveChanges();
+            TempData["Alert"] = "修改成功！";
             return RedirectToAction("Index");
+        }
+
+        public ActionResult ChangePassword()
+        {
+            ViewBag.Pass = false;
+            ViewBag.Correct = false;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword(ChangePasswordViewModel viewModel)
+        {
+            ViewBag.Pass = false;
+            ViewBag.Correct = false;
+            if(viewModel.NewPassword!=viewModel.NewPasswordConfirmed)
+            {
+                ViewBag.Pass = true;
+                return View();
+            }
+            User user= GetUser();
+            if(viewModel.OriginalPassword!=user.Password)
+            {
+                ViewBag.Correct = true;
+                return View();
+            }
+            Session["User"] = null;
+            user.Password = viewModel.NewPassword;
+            db.SaveChanges();
+            TempData["Alert"] = "修改密码成功！";
+            return RedirectToAction("Login");
         }
 
         protected override void Dispose(bool disposing)
