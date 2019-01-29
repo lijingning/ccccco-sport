@@ -24,8 +24,8 @@
                     <li>@Html.ActionLink("用户登陆", "Login", "User")</li>
                     <li>@Html.ActionLink("个人信息", "Index", "User")</li>
                     <li>@Html.ActionLink("运动时间表", "Time", "User")</li>
-                    <li>@Html.ActionLink("团体管理", "Time", "User")</li>
-                    <li>@Html.ActionLink("退出登陆","Logout","User")</li>
+                    <li>@Html.ActionLink("运动团体", "Index", "Group")</li>
+                    <li>@Html.ActionLink("退出登陆", "Logout", "User")</li>
                 </ul>
             </div>
         </div>
@@ -38,6 +38,12 @@
         </footer>
     </div>
 
+    @if (TempData["Alert"] != null && !string.IsNullOrWhiteSpace(TempData["Alert"].ToString()))
+    {
+        <script>
+            alert("@TempData["Alert"]")
+        </script>
+    }
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

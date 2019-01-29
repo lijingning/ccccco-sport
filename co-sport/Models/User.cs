@@ -10,7 +10,7 @@ namespace co_sport.Models
 {
     public class User
     {
-        public int UserID { get; set; }
+        public Guid UserID { get; set; }
         
         [Required]
         [Display(Name ="学号")]

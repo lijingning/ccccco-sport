@@ -1,0 +1,17 @@
+﻿@model co_sport.ViewModels.GroupViewModel
+@{
+    ViewBag.Title = "MemberManage";
+}
+
+<h2>成员管理</h2>
+
+<div>
+    <p>@Html.ActionLink("邀请他人加入","Invite")<br /></p>
+    <p>@Html.ActionLink("退出该团体","Secede")<br /></p>
+    <p>
+        @if (Model.IsManager)
+        {
+            @Html.ActionLink("移除团体内成员","Remove")
+        }
+    </p>
+</div>

@@ -3,7 +3,7 @@ namespace co_sport.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialMigration : DbMigration
+    public partial class initialMigration : DbMigration
     {
         public override void Up()
         {
@@ -12,8 +12,9 @@ namespace co_sport.Migrations
                 c => new
                     {
                         GroupID = c.Guid(nullable: false),
-                        Name = c.String(),
-                        Manager_UserID = c.Int(),
+                        Name = c.String(nullable: false),
+                        Abstract = c.String(),
+                        Manager_UserID = c.Guid(),
                     })
                 .PrimaryKey(t => t.GroupID)
                 .ForeignKey("dbo.User", t => t.Manager_UserID)
@@ -23,16 +24,16 @@ namespace co_sport.Migrations
                 "dbo.User",
                 c => new
                     {
-                        UserID = c.Int(nullable: false, identity: true),
-                        Gender = c.Boolean(nullable: false),
-                        StuNum = c.Int(nullable: false),
-                        Name = c.String(),
+                        UserID = c.Guid(nullable: false),
+                        StuNum = c.String(nullable: false),
+                        Password = c.String(nullable: false),
+                        Name = c.String(nullable: false),
                         Contact = c.String(),
-                        SportTimeTable_SportTimeTableID = c.Guid(nullable: false),
+                        WeChatID = c.String(),
                     })
                 .PrimaryKey(t => t.UserID)
-                .ForeignKey("dbo.SportTimeTable", t => t.SportTimeTable_SportTimeTableID)
-                .Index(t => t.SportTimeTable_SportTimeTableID);
+                .ForeignKey("dbo.SportTimeTable", t => t.UserID)
+                .Index(t => t.UserID);
             
             CreateTable(
                 "dbo.SportTimeTable",
@@ -60,7 +61,7 @@ namespace co_sport.Migrations
                         InvitationID = c.Guid(nullable: false),
                         Agreed = c.Boolean(),
                         Inviter_GroupID = c.Guid(),
-                        Receptor_UserID = c.Int(),
+                        Receptor_UserID = c.Guid(),
                     })
                 .PrimaryKey(t => t.InvitationID)
                 .ForeignKey("dbo.Group", t => t.Inviter_GroupID)
@@ -72,7 +73,7 @@ namespace co_sport.Migrations
                 "dbo.UserGroup",
                 c => new
                     {
-                        User_UserID = c.Int(nullable: false),
+                        User_UserID = c.Guid(nullable: false),
                         Group_GroupID = c.Guid(nullable: false),
                     })
                 .PrimaryKey(t => new { t.User_UserID, t.Group_GroupID })
@@ -88,7 +89,7 @@ namespace co_sport.Migrations
             DropForeignKey("dbo.Invitation", "Receptor_UserID", "dbo.User");
             DropForeignKey("dbo.Invitation", "Inviter_GroupID", "dbo.Group");
             DropForeignKey("dbo.Group", "Manager_UserID", "dbo.User");
-            DropForeignKey("dbo.User", "SportTimeTable_SportTimeTableID", "dbo.SportTimeTable");
+            DropForeignKey("dbo.User", "UserID", "dbo.SportTimeTable");
             DropForeignKey("dbo.Time", "SportTimeTable_SportTimeTableID", "dbo.SportTimeTable");
             DropForeignKey("dbo.UserGroup", "Group_GroupID", "dbo.Group");
             DropForeignKey("dbo.UserGroup", "User_UserID", "dbo.User");
@@ -97,7 +98,7 @@ namespace co_sport.Migrations
             DropIndex("dbo.Invitation", new[] { "Receptor_UserID" });
             DropIndex("dbo.Invitation", new[] { "Inviter_GroupID" });
             DropIndex("dbo.Time", new[] { "SportTimeTable_SportTimeTableID" });
-            DropIndex("dbo.User", new[] { "SportTimeTable_SportTimeTableID" });
+            DropIndex("dbo.User", new[] { "UserID" });
             DropIndex("dbo.Group", new[] { "Manager_UserID" });
             DropTable("dbo.UserGroup");
             DropTable("dbo.Invitation");

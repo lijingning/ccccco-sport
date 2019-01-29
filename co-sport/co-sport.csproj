@@ -155,22 +155,15 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Attributes\CheckLoginAttribute.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201901261021466_InitialMigration.cs" />
-    <Compile Include="Migrations\201901261021466_InitialMigration.Designer.cs">
-      <DependentUpon>201901261021466_InitialMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201901261846489_modifyusers.cs" />
-    <Compile Include="Migrations\201901261846489_modifyusers.Designer.cs">
-      <DependentUpon>201901261846489_modifyusers.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201901270918308_stuNumToString.cs" />
-    <Compile Include="Migrations\201901270918308_stuNumToString.Designer.cs">
-      <DependentUpon>201901270918308_stuNumToString.cs</DependentUpon>
+    <Compile Include="Migrations\201901291622466_initialMigration.cs" />
+    <Compile Include="Migrations\201901291622466_initialMigration.Designer.cs">
+      <DependentUpon>201901291622466_initialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SportContext.cs" />
@@ -181,6 +174,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\GroupViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -222,11 +216,17 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
-    <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\ChangePassword.cshtml" />
+    <Content Include="Views\Groups\CreateGroup.cshtml" />
+    <Content Include="Views\Groups\Delete.cshtml" />
+    <Content Include="Views\Groups\Details.cshtml" />
+    <Content Include="Views\Groups\Edit.cshtml" />
+    <Content Include="Views\Groups\Index.cshtml" />
+    <Content Include="Views\Groups\MyGroup.cshtml" />
+    <Content Include="Views\Groups\MemberManage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -245,14 +245,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201901261021466_InitialMigration.resx">
-      <DependentUpon>201901261021466_InitialMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201901261846489_modifyusers.resx">
-      <DependentUpon>201901261846489_modifyusers.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201901270918308_stuNumToString.resx">
-      <DependentUpon>201901270918308_stuNumToString.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201901291622466_initialMigration.resx">
+      <DependentUpon>201901291622466_initialMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
