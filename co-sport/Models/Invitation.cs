@@ -11,8 +11,19 @@ namespace co_sport.Models
 
         public bool? Agreed { get; set; }
 
-        public virtual Group Inviter { get; set; }
+        public string StuNum { get; set; }
 
-        public virtual User Receptor { get; set; }
+        public Guid GroupID { get; set; }
+    }
+
+    public class Request
+    {
+        public Guid RequestID { get; set; }
+
+        public bool? Agreed { get; set; }
+
+        public string StuNum { get; set; }
+
+        public Guid GroupID { get; set; }
     }
 }

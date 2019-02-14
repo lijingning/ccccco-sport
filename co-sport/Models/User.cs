@@ -10,8 +10,7 @@ namespace co_sport.Models
 {
     public class User
     {
-        public Guid UserID { get; set; }
-        
+        [Key]
         [Required]
         [Display(Name ="学号")]
         public string StuNum { get; set; }
@@ -30,8 +29,15 @@ namespace co_sport.Models
         [Display(Name="微信号")]
         public string WeChatID { get; set; }
 
+        public ICollection<Sport> Sports { get; set; }
+
         public virtual ICollection<Group> Groups { get; set; }
 
-        public virtual SportTimeTable SportTimeTable { get; set; }
+        public virtual ICollection<SportTime> SportTimes { get; set; }
+    }
+
+    public enum Sport
+    {
+        Running, Swinmming, Basketball, Volleyball, TableTennis, Tennis, Badminton, Soccer, Others
     }
 }

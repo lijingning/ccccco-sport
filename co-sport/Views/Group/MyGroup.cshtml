@@ -1,0 +1,53 @@
+﻿@model IEnumerable<co_sport.ViewModels.GroupViewModel>
+@{
+    ViewBag.Title = "MyGroup";
+}
+
+<h2>我的团体</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            团体名称
+        </th>
+        <th>
+            描述
+        </th>
+        <th>
+            人员数
+        </th>
+        <th>
+            身份
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GroupName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Abstract)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Count)
+            </td>
+            <td>
+                @if(item.IsManager)
+                {
+                    @:管理员
+                }
+                else
+                {
+                    @:成员
+                }
+            </td>
+            
+            <td>
+                @Html.ActionLink("详情", "Details", new { id = item.GroupID })
+            </td>
+        </tr>
+    }
+</table>

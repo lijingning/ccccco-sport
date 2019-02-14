@@ -7,7 +7,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace co_sport.Models
 {
-    public class SportContext:DbContext
+    public class SportContext : DbContext
     {
         public SportContext() : base("SportContext")
         {
@@ -16,15 +16,14 @@ namespace co_sport.Models
         public DbSet<User> Users { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Invitation> Invitations { get; set; }
-        public DbSet<SportTimeTable> SportTimeTables { get; set; }
-        public DbSet<Time> Times { get; set; }
+        public DbSet<SportTime> SportTimes { get; set; }
+        public DbSet<Request> Requests { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Entity<User>().HasMany(o => o.Groups).WithMany(o => o.Users);
-            modelBuilder.Entity<User>().HasRequired(o => o.SportTimeTable).WithRequiredDependent(o => o.User);
-            modelBuilder.Entity<SportTimeTable>().HasMany(o => o.Times);
+            modelBuilder.Entity<User>().HasMany(o => o.SportTimes).WithRequired(o => o.User);
         }
     }
 }

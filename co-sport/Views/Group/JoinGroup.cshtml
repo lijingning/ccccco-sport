@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<co_sport.ViewModels.GroupViewModel>
 @{
-    ViewBag.Title = "我的团体";
+    ViewBag.Title = "JoinGroup";
 }
 
-<h2>MyGroup</h2>
+<h2>未加入的团体</h2>
 
 <table class="table">
     <tr>
@@ -15,9 +15,6 @@
         </th>
         <th>
             人员数
-        </th>
-        <th>
-            身份
         </th>
         <th></th>
     </tr>
@@ -35,19 +32,9 @@
                 @Html.DisplayFor(modelItem => item.Count)
             </td>
             <td>
-                @if(item.IsManager)
-                {
-                    @:管理员
-                }
-                else
-                {
-                    @:成员
-                }
-            </td>
-            
-            <td>
-                @Html.ActionLink("详情", "Details", new { id = item.GroupID })
+                @Html.ActionLink("加入", "ApplyForJoining", new { id = item.GroupID })
             </td>
         </tr>
     }
 </table>
+

@@ -1,0 +1,100 @@
+﻿@model bool[]
+
+@{
+    ViewBag.Title = "SportTime";
+}
+
+<h2>编辑我的运动时间</h2>
+@using (Html.BeginForm())
+{
+<div class="form-horizontal">
+    <div class="form-group">
+        <table class="table table-bordered">
+            <tr>
+                <th align="center">时间段</th>
+                <th align="center">周一</th>
+                <th align="center">周二</th>
+                <th align="center">周三</th>
+                <th align="center">周四</th>
+                <th align="center">周五</th>
+                <th align="center">周六</th>
+                <th align="center">周七</th>
+            </tr>
+            <tr>
+                <td>08:00-09:30</td>
+                <td id="11"></td>
+                <td id="21"></td>
+                <td id="31"></td>
+                <td id="41"></td>
+                <td id="51"></td>
+                <td id="61"></td>
+                <td id="71"></td>
+            </tr>
+            <tr>
+                <td>09:50-11:20</td>
+                <td id="12"></td>
+                <td id="22"></td>
+                <td id="32"></td>
+                <td id="42"></td>
+                <td id="52"></td>
+                <td id="62"></td>
+                <td id="72"></td>
+            </tr>
+            <tr>
+                <td>13:30-15:00</td>
+                <td id="13"></td>
+                <td id="23"></td>
+                <td id="33"></td>
+                <td id="43"></td>
+                <td id="53"></td>
+                <td id="63"></td>
+                <td id="73"></td>
+            </tr>
+            <tr>
+                <td>15:20-16:50</td>
+                <td id="14"></td>
+                <td id="24"></td>
+                <td id="34"></td>
+                <td id="44"></td>
+                <td id="54"></td>
+                <td id="64"></td>
+                <td id="74"></td>
+            </tr>
+            <tr>
+                <td>18:30-20:00</td>
+                <td id="15"></td>
+                <td id="25"></td>
+                <td id="35"></td>
+                <td id="45"></td>
+                <td id="55"></td>
+                <td id="65"></td>
+                <td id="75"></td>
+            </tr>
+            <tr>
+                <td>20:20-Later</td>
+                <td id="16"></td>
+                <td id="26"></td>
+                <td id="36"></td>
+                <td id="46"></td>
+                <td id="56"></td>
+                <td id="66"></td>
+                <td id="76"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+<script>
+    @for (var i = 1; i <= 7; i++)
+    {
+        for (var j = 1; j <= 6; j++)
+        {
+            @Html.Raw(string.Format("document.getElementById(i.toString + j.toString).innerHTML = \"<input type='checkbox' name='selectedTimes' value='{0}' {1}", i.ToString() + j.ToString(), Model[i * 10 + j] ? "checked='checked'" : ""));
+            }
+        }
+</script>

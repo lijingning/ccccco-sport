@@ -78,6 +78,7 @@ namespace co_sport.Controllers
         public ActionResult Register()
         {
             ViewBag.Pass = true;
+            ViewBag.Existence = false;
             return View();
         }
 
@@ -91,6 +92,7 @@ namespace co_sport.Controllers
                 viewModel.Password = "";
                 viewModel.PasswordConfirmed = "";
                 ViewBag.Pass = false;
+                ViewBag.Existence = false;
                 return View(viewModel);
             }
             if (ModelState.IsValid)
@@ -98,13 +100,14 @@ namespace co_sport.Controllers
                 if(db.Users.Count(o=>o.StuNum==viewModel.StuNum)>0)
                 {
                     ViewBag.Existence = true;
+                    ViewBag.Pass = true;
                     return View();
                 }
                 User user = new User { Name = viewModel.Name, Password = viewModel.Password, StuNum = viewModel.StuNum };
                 user.Contact = viewModel.Contact ?? "";
                 user.WeChatID = viewModel.WeChatID ?? "";
-                user.SportTimeTable = new SportTimeTable();
                 user.Groups = new List<Group>();
+                user.SportTimes = new List<SportTime>();
                 db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");

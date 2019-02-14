@@ -75,11 +75,48 @@ namespace co_sport.Controllers
                     Count = group.Count,
                     GroupName = group.Name,
                     GroupID = group.GroupID,
-                    IsManager = user.UserID == group.Manager.UserID ? true : false
+                    IsManager = user.StuNum == group.Manager.StuNum ? true : false
                 };
                 viewModel.Add(temp);
             }
             return View(viewModel);
+        }
+
+        public ActionResult JoinGroup()
+        {
+            User user = GetUser();
+            List<Group> Groups = new List<Group>();
+            foreach(Group g in db.Groups)
+            {
+                if(!g.Users.Contains(user))
+                {
+                    Groups.Add(g);
+                }
+            }
+            return View(Groups);
+        }
+
+        public ActionResult ApplyForJoining(Guid GroupID)
+        {
+            User user = GetUser();
+            Group group = db.Groups.Find(GroupID);
+
+            Request request = db.Requests.Where(o => o.GroupID == GroupID && o.StuNum == user.StuNum).SingleOrDefault();
+            if(request!=null)
+            {
+                TempData["Alert"] = "你已经发送过申请了，请等待管理员审批！";
+                return RedirectToAction("JoinGroup");
+            }
+            request = new Request
+            {
+                Agreed = null,
+                StuNum = user.StuNum,
+                GroupID = group.GroupID
+            };
+            db.Requests.Add(request);
+            db.SaveChanges();
+            TempData["Alert"] = "成功发送加入申请！";
+            return RedirectToAction("JoinGroup");
         }
 
         public ActionResult MemberManage(Guid GroupID)
@@ -91,7 +128,7 @@ namespace co_sport.Controllers
                 GroupName=group.Name,
                 Abstract=group.Abstract,
                 Count=group.Count,
-                IsManager=user.UserID == group.Manager.UserID ? true : false
+                IsManager=user.StuNum == group.Manager.StuNum ? true : false
             };
             return View(viewModel);
         }
