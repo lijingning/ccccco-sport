@@ -94,7 +94,7 @@
     {
         for (var j = 1; j <= 6; j++)
         {
-            @Html.Raw(string.Format("document.getElementById(i.toString + j.toString).innerHTML = \"<input type='checkbox' name='selectedTimes' value='{0}' {1}", i.ToString() + j.ToString(), Model[i * 10 + j] ? "checked='checked'" : ""));
-            }
+            @Html.Raw(string.Format("document.getElementById("+i.ToString() + j.ToString()+").innerHTML = \"<input type='checkbox' name='selectedTimes' value='{0}' {1}>\";\n", i.ToString() + j.ToString(), Model[i * 10 + j] ? "checked='checked'" : ""));
         }
+    }
 </script>

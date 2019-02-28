@@ -11,8 +11,9 @@ namespace co_sport.Models
     {
         public Guid SportTimeID { get; set; }
 
+        [Required]
         public int TimeID { get; set; }
 
-        public virtual User User { get; set; }
+        public User User { get; set; }
     }
 }

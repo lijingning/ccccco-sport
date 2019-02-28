@@ -29,7 +29,7 @@ namespace co_sport.Models
         [Display(Name="微信号")]
         public string WeChatID { get; set; }
 
-        public ICollection<Sport> Sports { get; set; }
+        public virtual ICollection<Sport> Sports { get; set; }
 
         public virtual ICollection<Group> Groups { get; set; }
 

@@ -22,8 +22,11 @@ namespace co_sport.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-            modelBuilder.Entity<User>().HasMany(o => o.Groups).WithMany(o => o.Users);
+            modelBuilder.Entity<User>().HasKey(o => o.StuNum).HasMany(o => o.Groups).WithMany(o => o.Users);
             modelBuilder.Entity<User>().HasMany(o => o.SportTimes).WithRequired(o => o.User);
+
+            modelBuilder.Entity<SportTime>().HasKey(o => o.SportTimeID);
+           
         }
     }
 }
