@@ -1,4 +1,4 @@
-﻿@model IEnumerable<co_sport.ViewModels.GroupViewModel>
+﻿@model IEnumerable<co_sport.Models.Group>
 @{
     ViewBag.Title = "JoinGroup";
 }
@@ -23,7 +23,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.GroupName)
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Abstract)
@@ -32,7 +32,7 @@
                 @Html.DisplayFor(modelItem => item.Count)
             </td>
             <td>
-                @Html.ActionLink("加入", "ApplyForJoining", new { id = item.GroupID })
+                @Html.ActionLink("申请加入", "ApplyForJoining", new { GroupID = item.GroupID })
             </td>
         </tr>
     }

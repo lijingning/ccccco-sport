@@ -9,17 +9,20 @@
 <div>
     <h4>团队成员</h4>
     <hr />
-    <dl class="dl-horizontal">
+    <table class="table">
+        <tr>
+            <th>姓名</th><th>学号</th>
+        </tr>
+        <tr>
+            <th>@Model.Manager.Name (管理员)</th><th>@Model.Manager.StuNum</th>
+        </tr>
         @foreach(var user in Model.Users)
         {
-        <dt>
-            @Html.DisplayFor(model => user.StuNum)
-        </dt>
-        <dt>
-            @Html.DisplayFor(model=>user.Name)
-        </dt>
+        <tr>
+            <th>@Html.DisplayFor(model => user.Name)</th><th>@Html.DisplayFor(model => user.StuNum)</th>
+        </tr>
         }
-    </dl>
+    </table>
 </div>
 <div>
     <h4>团队成员运动时间表</h4>
@@ -98,8 +101,8 @@
     </table>
 </div>
 <p>
-    @Html.ActionLink("成员管理","MemberManage", new { id = Model.GroupID }) |
-    @Html.ActionLink("更改", "Edit", new { id = Model.GroupID }) |
+    @Html.ActionLink("成员管理","MemberManage", new { GroupID = Model.GroupID }) |
+    @Html.ActionLink("更改", "Edit", new { GroupID = Model.GroupID }) |
     @Html.ActionLink("返回", "MyGroup")
 </p>
 <script>

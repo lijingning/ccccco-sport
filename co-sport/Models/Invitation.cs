@@ -13,6 +13,8 @@ namespace co_sport.Models
 
         public string StuNum { get; set; }
 
+        public string GroupName { get; set; }
+
         public Guid GroupID { get; set; }
     }
 
@@ -23,6 +25,8 @@ namespace co_sport.Models
         public bool? Agreed { get; set; }
 
         public string StuNum { get; set; }
+
+        public string StuName { get; set; }
 
         public Guid GroupID { get; set; }
     }

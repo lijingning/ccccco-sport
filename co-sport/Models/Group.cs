@@ -18,13 +18,7 @@ namespace co_sport.Models
         public string Abstract { get; set; }
 
         [Display(Name="团体人数")]
-        public int Count
-        {
-            get
-            {
-                return Users.Count + 1;
-            }
-        }
+        public int Count { get; set; }
 
         public virtual ICollection<User> Users { get; set; }
 

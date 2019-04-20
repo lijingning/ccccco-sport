@@ -1,8 +1,33 @@
-﻿@model co_sport.ViewModels.GroupViewModel
+﻿@model co_sport.ViewModels.MemberManageViewModel
 @{
     ViewBag.Title = "MemberManage";
 }
-
+<h2>申请列表</h2>
+<table class="table">
+    <tr>
+        <th>
+            姓名
+        </th>
+        <th>
+            学号
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.Requests)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StuName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StuNum)
+            </td>
+            <td>
+                @Html.ActionLink("同意", "Accept", new { RequestID = item.RequestID })|@Html.ActionLink("拒绝","Dismiss",new {RequestID = item.RequestID })
+            </td>
+        </tr>
+    }
+</table>
 <h2>成员管理</h2>
 
 <div>

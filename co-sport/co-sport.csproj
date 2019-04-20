@@ -166,6 +166,14 @@
     <Compile Include="Migrations\201902281618527_init.Designer.cs">
       <DependentUpon>201902281618527_init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904200544526_group.cs" />
+    <Compile Include="Migrations\201904200544526_group.Designer.cs">
+      <DependentUpon>201904200544526_group.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904201039269_model_invitation_change.cs" />
+    <Compile Include="Migrations\201904201039269_model_invitation_change.Designer.cs">
+      <DependentUpon>201904201039269_model_invitation_change.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SportContext.cs" />
     <Compile Include="Models\Group.cs" />
@@ -177,6 +185,7 @@
     <Compile Include="ViewModels\JoinGroupViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\GroupViewModel.cs" />
+    <Compile Include="ViewModels\MemberManageViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -251,6 +260,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201902281618527_init.resx">
       <DependentUpon>201902281618527_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904200544526_group.resx">
+      <DependentUpon>201904200544526_group.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904201039269_model_invitation_change.resx">
+      <DependentUpon>201904201039269_model_invitation_change.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

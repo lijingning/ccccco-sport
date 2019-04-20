@@ -52,11 +52,15 @@ namespace co_sport.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateGroup([Bind(Include = "GroupID,Name,Abstract")] Group group)
         {
+            User user = GetUser();
             if (ModelState.IsValid)
             {
                 group.GroupID = Guid.NewGuid();
                 group.Manager = GetUser();
+                group.Users = new List<User>();
+                group.Count = 1;
                 db.Groups.Add(group);
+                user.Groups.Add(group);
                 db.SaveChanges();
                 TempData["Alert"] = "创建成功！";
                 return RedirectToAction("Index");
@@ -86,22 +90,23 @@ namespace co_sport.Controllers
         {
             User user = GetUser();
             List<Group> Groups = new List<Group>();
-            foreach(Group g in db.Groups)
+            foreach (Group g in db.Groups.ToList())
             {
-                if(!g.Users.Contains(user))
+                if (!g.Users.Contains(user))
                 {
                     Groups.Add(g);
                 }
             }
             return View(Groups);
         }
-
+        
         public ActionResult ApplyForJoining(Guid GroupID)
         {
             User user = GetUser();
             Group group = db.Groups.Find(GroupID);
 
-            Request request = db.Requests.Where(o => o.GroupID == GroupID && o.StuNum == user.StuNum).SingleOrDefault();
+            Request request = db.Requests.Where(o => o.GroupID == GroupID && o.StuNum == user.StuNum && o.Agreed==null).SingleOrDefault();
+
             if(request!=null)
             {
                 TempData["Alert"] = "你已经发送过申请了，请等待管理员审批！";
@@ -109,8 +114,10 @@ namespace co_sport.Controllers
             }
             request = new Request
             {
+                RequestID = Guid.NewGuid(),
                 Agreed = null,
                 StuNum = user.StuNum,
+                StuName=user.Name,
                 GroupID = group.GroupID
             };
             db.Requests.Add(request);
@@ -123,16 +130,42 @@ namespace co_sport.Controllers
         {
             Group group = db.Groups.Find(GroupID);
             User user = GetUser();
-            var viewModel = new GroupViewModel {
-                GroupID=GroupID,
-                GroupName=group.Name,
-                Abstract=group.Abstract,
-                Count=group.Count,
-                IsManager=user.StuNum == group.Manager.StuNum ? true : false
+            var viewModel = new MemberManageViewModel {
+                Group = group,
+                User = user,
+                IsManager = user.StuNum == group.Manager.StuNum ? true : false,
+                Requests = new List<Request>()
             };
+            foreach(var request in db.Requests.ToList())
+            {
+                if(request.GroupID==GroupID && request.Agreed==null)
+                {
+                    viewModel.Requests.Add(request);
+                }
+            }
             return View(viewModel);
         }
 
+        public ActionResult Accept(Guid RequestID)
+        {
+            Request request = db.Requests.Find(RequestID);
+            User applier = db.Users.Find(request.StuNum);
+            Group group = db.Groups.Where(o => o.GroupID == request.GroupID).SingleOrDefault();
+            group.Count++;
+            group.Users.Add(applier);
+            applier.Groups.Add(group);
+            request.Agreed = true;
+            db.SaveChanges();
+            return RedirectToAction("MemberManage",new { GroupID=request.GroupID});
+        }
+
+        public ActionResult Dismiss(Guid RequestID)
+        {
+            Request request = db.Requests.Find(RequestID);
+            request.Agreed = false;
+            db.SaveChanges();
+            return RedirectToAction("MemberManage", new { GroupID = request.GroupID });
+        }
 
         public ActionResult Edit(Guid? id)
         {
