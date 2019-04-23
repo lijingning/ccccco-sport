@@ -13,7 +13,7 @@ using co_sport.ViewModels;
 namespace co_sport.Controllers
 {
     [CheckLogin]
-    public class GroupController : Controller//未实现签到功能,查看人员缺少搜索和分页功能
+    public class GroupController : Controller
     {
         private SportContext db = new SportContext();
 
@@ -40,7 +40,19 @@ namespace co_sport.Controllers
             {
                 return HttpNotFound();
             }
-            return View(group);
+            string[,] table = new string[8,7];
+            foreach(var user in group.Users)
+            {
+                foreach(var sportTime in user.SportTimes)
+                {
+                    int i = sportTime.TimeID / 10, j = sportTime.TimeID % 10;
+                    table[i, j] += user.Name + " ";
+                }
+            }
+            DetailsViewModel detailsViewModel = new DetailsViewModel();
+            detailsViewModel.Group = group;
+            detailsViewModel.Table = table;
+            return View(detailsViewModel);
         }
 
         public ActionResult CreateGroup()
